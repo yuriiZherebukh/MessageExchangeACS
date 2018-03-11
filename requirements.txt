@@ -1,0 +1,8 @@
+Django==1.11.3
+django-coverage==1.2.4
+psycopg2==2.7.1
+pylint==1.7.2
+pylint-django==0.7.2
+pylint-plugin-utils==0.2.6
+PyYAML==3.12
+
