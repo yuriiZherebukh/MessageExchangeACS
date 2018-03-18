@@ -4,6 +4,7 @@ Yhis module contains global configurations for messageExchangeACS project
 
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -26,7 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration',
 ]
+
+AUTH_USER_MODEL = 'registration.CustomUser'
 
 MIDDLEWARE = [
     #'corsheaders.middleware.CorsMiddleware',
@@ -82,8 +86,13 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/'),]
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 try:
     from .local_settings import *  # pylint: disable=wildcard-import,unused-wildcard-import
+except ImportError:
+    pass
+try:
+    from .logger_configurations import *
 except ImportError:
     pass
