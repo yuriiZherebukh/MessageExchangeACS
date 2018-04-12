@@ -107,3 +107,6 @@ ENV/
 public/
 node_modules/
 package-lock.json
+
+#my settings
+jwt_configurations.py

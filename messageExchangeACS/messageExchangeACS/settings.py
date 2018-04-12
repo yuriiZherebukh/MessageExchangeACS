@@ -1,5 +1,5 @@
 """
-Yhis module contains global configurations for messageExchangeACS project
+This module contains global configurations for messageExchangeACS project
 """
 
 import os
@@ -7,10 +7,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v!2-ma*uob^!-0r7(b6)rq3^-u84-=jg6s&ve)9r5cv#3ad&18'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
@@ -27,10 +24,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration',
+    'rest_framework',
+    'rest_framework_jwt',
+    'authentication.apps.AuthenticationConfig',
+    'institute',
+    'department',
+
 ]
 
-AUTH_USER_MODEL = 'registration.CustomUser'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+AUTH_USER_MODEL = 'authentication.UserAccount'
 
 MIDDLEWARE = [
     #'corsheaders.middleware.CorsMiddleware',
@@ -94,5 +107,9 @@ except ImportError:
     pass
 try:
     from .logger_configurations import *
+except ImportError:
+    pass
+try:
+    from .jwt_configurations import *
 except ImportError:
     pass
