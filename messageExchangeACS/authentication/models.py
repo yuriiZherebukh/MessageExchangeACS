@@ -2,6 +2,10 @@
 Contains models to operate with User account and User login activity
 """
 
+from institute.models import Institute
+from group.models import Group
+from department.models import Department
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
@@ -59,6 +63,10 @@ class UserAccount(AbstractBaseUser):
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+
+    institute = models.ForeignKey(Institute, on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
 
     is_admin = models.BooleanField(default=False)
 

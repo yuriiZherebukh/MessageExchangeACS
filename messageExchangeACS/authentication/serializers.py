@@ -3,6 +3,7 @@ This module contains classes to serialize Authentication app models
 """
 
 from django.contrib.auth import authenticate, user_logged_in
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_payload_handler, jwt_encode_handler
 
@@ -70,6 +71,12 @@ class AccountSerializer(serializers.ModelSerializer):
             if data['password'] != data['confirm_password']:
                 return False
         return data
+
+    def get_by_id(self, user_id):
+        try:
+            return UserAccount.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return None
 
 
 class JWTSerializer(JSONWebTokenSerializer):

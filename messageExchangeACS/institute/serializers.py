@@ -6,4 +6,4 @@ from .models import Institute
 class InstituteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institute
-        fields = ('id', 'name', 'city', 'street', 'house_number')
+        fields = ('id', 'header', 'boxy', 'created_at')

@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^$', InstituteView.as_view()),
     url(r'^(?P<institute_id>\d+)/$', InstituteView.as_view()),
     url(r'^(?P<institute_id>\d+)/department/', include('department.urls')),
-    # url(r'^(?P<institute_id>\d+)/department/', include('department.urls')),
-    #url(r'^(?P<institute_id>\d+)/profile/', include('profile.urls')),
+    url(r'^(?P<institute_id>\d+)/group/', include('group.urls')),
+    url(r'^(?P<institute_id>\d+)/profile/', include('user_profile.urls')),
 ]

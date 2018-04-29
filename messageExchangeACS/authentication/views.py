@@ -10,10 +10,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.views import ObtainJSONWebToken
 
-from messageExchangeACS.logger_configurations import init
+from user_profile.models import UserProfile
 from .serializers import AccountSerializer, JWTSerializer
 
-register_log = init("E:\\Repo\MessageExchangeACS\\messageExchangeACS\\logs\\authentication.log", logging.INFO)
 
 
 class ObtainJWTView(ObtainJSONWebToken):
@@ -46,11 +45,9 @@ class AuthRegister(APIView):
         :param format: Include suffixes format
         :return: Result of method execution, otherwise information about error
         """
-
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            register_log.debug("User registered with data: email {}, First name: {}, Last name: [}".format(
-                serializer.data.get("email"), serializer.data.get("fist_name"), serializer.data.get("last_name")))
+            user = serializer.save()
+            UserProfile.objects.create(user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

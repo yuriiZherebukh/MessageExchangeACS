@@ -1,0 +1,33 @@
+POST 127.0.0.1:8000/api/v1/auth/login/
+{
+	"email": "tes12@gmail.com",
+	"password": "test4"
+}
+
+POST 127.0.0.1:8000/api/v1/auth/register/
+
+{
+	"email": "tes12@gmail.com",
+	"first_name":"test4",
+	"last_name": "test4",
+	"password": "test4",
+	"confirm_password":"test4"
+}
+
+
+HEADERS
+Authorization JWT token_code
+
+POST 127.0.0.1:8000/api/v1/message/
+
+{
+	"header": "test1message",
+	"body": "some body",
+	"to_users": [9, 10]
+}
+
+
+
+
+uwsgi --ini messageExchange.ini --chmod-socket=666
+
