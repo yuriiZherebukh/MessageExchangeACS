@@ -12,7 +12,7 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 
 from user_profile.models import UserProfile
 from .serializers import AccountSerializer, JWTSerializer
-
+from .models import UserAccount
 
 
 class ObtainJWTView(ObtainJSONWebToken):
@@ -49,5 +49,18 @@ class AuthRegister(APIView):
         if serializer.is_valid():
             user = serializer.save()
             UserProfile.objects.create(user=user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserListView(APIView):
+    def get(self, request, user_id=None, format=None):
+        if user_id:
+            user = UserAccount.get_by_id(user_id)
+            if not user:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = AccountSerializer(user)
+            return Response(serializer.data)
+        users = UserAccount.objects.all()
+        response = AccountSerializer(users, many=True)
+        return Response(response.data)

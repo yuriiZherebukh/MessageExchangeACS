@@ -7,11 +7,12 @@ from classroom.models import Classroom
 class Meeting(models.Model):
     owner_user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, related_name='created_user')
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
-    participated_user = models.ManyToManyField(UserAccount, through='ParticipatedUser')
+    name = models.CharField(max_length=255)
+    description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    date_of_action = models.DateTimeField(editable=True, null=True, blank=True)
-    starts_at = models.DateTimeField(editable=True, null=True, blank=True)
-    finishes_at = models.DateTimeField(editable=True, null=True, blank=True)
+    date_of_action = models.DateField(editable=True, null=True, blank=True)
+    starts_at = models.TimeField(editable=True, null=True, blank=True)
+    finishes_at = models.TimeField(editable=True, null=True, blank=True)
 
     @staticmethod
     def get_by_id(meeting_id):
@@ -22,5 +23,5 @@ class Meeting(models.Model):
 
 
 class ParticipatedUser(models.Model):
-    participated_user_id = models.ForeignKey(UserAccount)
-    meeting_id = models.ForeignKey(Meeting)
+    participated_user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)

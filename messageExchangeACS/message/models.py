@@ -7,7 +7,6 @@ class Message(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, related_name='sender_user')
     header = models.CharField(max_length=255)
     body = models.TextField()
-    to_users = models.ManyToManyField(UserAccount, through='ToUser')
     created_at = models.DateTimeField(auto_now_add=True)
 
     @staticmethod
@@ -19,5 +18,5 @@ class Message(models.Model):
 
 
 class ToUser(models.Model):
-    to_user_id = models.ForeignKey(UserAccount)
-    message_id = models.ForeignKey(Message)
+    to_user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    message = models.ForeignKey(Message)

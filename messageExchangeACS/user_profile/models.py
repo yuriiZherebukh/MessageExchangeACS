@@ -1,6 +1,4 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.db import models
 from authentication.models import UserAccount
 
@@ -26,7 +24,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(UserAccount, on_delete=models.CASCADE, primary_key=True)
     avatar = models.URLField(default=DEFAULT_AVATAR, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    prone_number = models.CharField(max_length=14, null=True, blank=True)
+    phone_number = models.CharField(max_length=14, null=True, blank=True)
     position = models.CharField(max_length=40, choices=POSITION, null=True, blank=True)
 
     @staticmethod
@@ -39,6 +37,6 @@ class UserProfile(models.Model):
             Object<Profile>: Object of Profile or None if got exception.
         """
         try:
-            return UserAccount.objects.get(user=user_id)
+            return UserProfile.objects.get(user=user_id)
         except ObjectDoesNotExist:
             return None

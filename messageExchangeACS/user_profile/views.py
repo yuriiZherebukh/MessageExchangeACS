@@ -1,16 +1,13 @@
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import UserProfileSerializer
 from .models import UserProfile
-from messageExchangeACS.image_utils import upload, imageValidator
+from authentication.models import UserAccount
 
 
 class UserProfileView(APIView):
-    permission_classes = (IsAuthenticated,)
-
     def get(self, request, profile_id=None, format=None):
         if profile_id:
             profile = UserProfile.get_by_id(profile_id)
@@ -18,7 +15,8 @@ class UserProfileView(APIView):
                 return Response(status=status.HTTP_404_NOT_FOUND)
             serialized_data = UserProfileSerializer(profile)
             return Response(serialized_data.data)
-        profile = UserProfile.get_by_id(request.user.id)
+        user = UserAccount.objects.get(email=request.user)
+        profile = UserProfile.get_by_id(user.pk)
         if not profile:
             return Response(status=status.HTTP_404_NOT_FOUND)
         profile_data = UserProfileSerializer(profile)

@@ -1,8 +1,19 @@
-export let logged = () => document.cookie.indexOf('sessionid') != -1;
+import axios from "axios";
+
+
+export let logged = () => sessionStorage.getItem('Authorization') != null;
 
 export const EMAIL_REGEXP = /.+@.+\..+/;
 export const ALPHA_REGEXP = /^[a-z]{0,20}$/i;
 export const DIGIT_REGEXP = /^[0-9]{0,2}$/;
+
+
+export const axiosInstance = axios.create({
+        baseURL: 'http://192.168.64.128:8000/',
+        headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionStorage.getItem('Authorization')}
+        });
 
 export function emailIsNotValid(email) {
     if (email == '') {
@@ -17,6 +28,11 @@ export function emailIsNotValid(email) {
 export function fieldIsEmpty(field) {
     return field == '' ? 'This field is required':'';
 }
+
+export function arrayIsEmpty(array) {
+    return array.length == 0 ? 'This field is required':'';
+}
+
 
 const getCookie = (cookieName) => {
     var name = cookieName + "=";

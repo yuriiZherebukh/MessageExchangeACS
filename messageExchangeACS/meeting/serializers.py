@@ -1,22 +1,15 @@
 from rest_framework import serializers
 
-from .models import Meeting, ParticipatedUser
+from .models import Meeting
+from classroom.serializers import ClassroomSerializer
 
-from authentication.models import UserAccount
+from authentication.serializers import AccountSerializer
 
 
 class MeetingSerializer(serializers.ModelSerializer):
-    participated_user = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=UserAccount.objects.all()
-    )
+    owner_user = AccountSerializer(read_only=True)
+    classroom = ClassroomSerializer(read_only=True)
 
     class Meta:
         model = Meeting
-        fields = ('id', 'owner_user', 'classroom', 'participated_user', 'date_of_action', 'starts_at', 'finishes_at')
-
-    def create(self, validated_data):
-        meeting_data = validated_data.pop("participated_user")
-        meeting = Meeting.objects.create(**validated_data)
-        for participated_user in meeting_data:
-            ParticipatedUser.objects.create(participated_user_id=participated_user, meeting_id=meeting_data)
-        return meeting
+        fields = ('id', 'owner_user', 'classroom', 'name', 'description', 'date_of_action', 'starts_at', 'finishes_at')

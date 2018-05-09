@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^api/v1/message/', include('message.urls')),
     url(r'^api/v1/classroom/', include('classroom.urls')),
     url(r'^api/v1/meeting/', include('meeting.urls')),
+    url(r'^api/v1/profile/', include('user_profile.urls')),
     url(r'.*', include('home.urls')),
 ]

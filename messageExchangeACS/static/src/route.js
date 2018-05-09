@@ -2,16 +2,16 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 
 import Home from "./home/home";
-import Help from './help/Help'
 import Login from "./registration/login";
 import Registration from "./registration/registration";
 import Profile from "./profile/profile";
 import ProfileByID from "./profile/profileByID";
-import CreateTrip from "./trip/create_trip";
-import TripList from "./trip/trip_list";
-import MyTrips from "./trip/my_trips";
-import TripPage from "./trip/trip_page";
-import RestorePass from "./restore-password/restore-password.js"
+import Message from "./message/message";
+import MessagesMain from "./message/messages_main";
+import ClassroomsMain from "./classroom/classrooms_main";
+import ClassroomCreateMain from "./classroom/classroomCreateMain";
+import MeetingsMain from "./meeting/meetingsMain";
+import MeetingCreateMain from "./meeting/meetingCreateMain";
 import NotFound from './notFound';
 
 
@@ -39,19 +39,25 @@ export default class MainRoute extends React.Component {
                             {...props}
                         />}
                     />
-                    <Route exact path='/help' component={Help} />
-                    <Route exact path='/create_trip' component={CreateTrip} />
-                    <Route exact path='/trips' component={TripList} />
-                    <Route exact path='/my_trips' component={MyTrips} />
-                    <Route exact path='/trip/:id' component={TripPage} />
                     <Route exact path="/profile/" component={Profile} />
                     <Route exact path="/profile/:id" component={ProfileByID} />
-                    <Route exact path="/restore-password/" component={RestorePass} />
-                    <Route exact path="/restore-password/:token" component={RestorePass} />
+                    <Route exact path="/message/" render={(props) => <Message
+                            loginHandler={this.props.loginHandler}
+                            {...props}
+                        /> }
+                    />
+                    <Route exact path="/messages/" component={MessagesMain} />
+                    <Route exact path="/classrooms/" component={ClassroomsMain} />
+                    <Route exact path="/classroom/" render={(props) => <ClassroomCreateMain
+                            loginHandler={this.props.loginHandler}
+                            {...props}
+                        /> }
+                    />
+                    <Route exact path="/meetings/" component={MeetingsMain} />
+                    <Route exact path="/meeting/" component={MeetingCreateMain} />
                     <Route component={NotFound} />
                 </Switch>
             </main>
         );
     }
 }
-

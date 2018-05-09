@@ -4,7 +4,6 @@ from authentication.models import UserAccount
 
 
 class Classroom(models.Model):
-    workers = models.ManyToManyField(UserAccount, through='WorkerPlace')
     number = models.IntegerField()
     size = models.IntegerField()
 
@@ -14,8 +13,3 @@ class Classroom(models.Model):
             return Classroom.objects.get(id=classroom_id)
         except ObjectDoesNotExist:
             return None
-
-
-class WorkerPlace(models.Model):
-    worker_id = models.ForeignKey(UserAccount)
-    classroom_id = models.ForeignKey(Classroom)

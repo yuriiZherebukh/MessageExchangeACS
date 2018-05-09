@@ -6,7 +6,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { logged } from './utils';
-import { logoutService } from './registration/registration.service';
 
 const style = {
     LabelSize : {
@@ -34,12 +33,7 @@ export default class Header extends React.Component {
     }
 
     logout = () => {
-        logoutService()
-            .then((response) => {
-                this.props.loginHandler(false);
-            })
-            .catch((error) => console.dir(error));
-
+        sessionStorage.removeItem('Authorization');
     }
 
     render() {
@@ -65,12 +59,11 @@ export default class Header extends React.Component {
             elementRight =  (
                 <div className='title'>
                     <RaisedButton
-                        label='MY TRIPS'
+                        label='SEND A MESSAGE'
                         secondary={true}
                         labelStyle = { style.myTrips }
-                        containerElement={<Link to="/my_trips"/>}
+                        containerElement={<Link to="/message"/>}
                     />
-
                     <FlatButton
                         label='PROFILE'
                         className='header_btn'
@@ -83,20 +76,19 @@ export default class Header extends React.Component {
                         className='header_btn'
                         onTouchTap = {this.logout}
                         labelStyle = { style.LabelSize }
-                        containerElement={<Link to="/login"/>}
+                        containerElement={<Link to="/"/>}
                     />
                 </div>
             )
         }
         return (
             <AppBar
-                //style={{position: 'fixed'}}
                 className='header'
                 iconStyleLeft = { style.iconLeftStyle }
                 iconElementLeft = {
                     <div className='title'>
                         <img className='header_icon' src='/static/src/img/logo.png' />
-                        <Link to='/'>TripTracker</Link>
+                        <Link to='/'>MessageExchangeACS</Link>
                     </div>
                 }
                 iconElementRight = { elementRight }
@@ -105,4 +97,3 @@ export default class Header extends React.Component {
         );
     }
 }
-
