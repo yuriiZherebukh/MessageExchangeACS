@@ -20,7 +20,7 @@ pylint-django==0.7.2
 pylint-plugin-utils==0.2.6
 python-dateutil==2.6.1
 pytz==2018.3
-PyYAML==3.12
+PyYAML==5.4
 s3transfer==0.1.13
 six==1.11.0
 uWSGI==2.0.17
