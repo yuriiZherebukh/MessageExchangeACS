@@ -23,7 +23,7 @@
     "css-loader": "^0.28.5",
     "extract-text-webpack-plugin": "^2.1.2",
     "material-ui": "^0.18.7",
-    "moment": "^2.18.1",
+    "moment": "^2.29.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-dropzone": "^4.1.0",
